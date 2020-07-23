@@ -18,14 +18,16 @@ jobs:
         image: ${{matrix.db}}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 1
+          MYSQL_SOCKET_DIR: /var/run/mysqld
         ports:
           - 3306:3306
+        volumes:
+          - /var/run/mysqld:/var/run/mysqld
         options: >-
           --health-cmd "mysql -u root --protocol tcp -e 'SELECT @@version;'"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 5
-          --volume /var/run/mysqld:/var/run/mysqld
     steps:
     - uses: actions/checkout@v2.3.1
     - run: mysql --version
