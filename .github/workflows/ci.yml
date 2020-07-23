@@ -21,19 +21,16 @@ jobs:
         ports:
           - 3306:3306
         volumes:
-          - /home/runner/work/test_mysql/test_mysql/tmp:/tmp
+          - /tmp:/tmp
         options: >-
           --health-cmd "mysql -u root --protocol tcp -e 'SELECT @@version;'"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 5
-    env:
-      MYSQL_UNIX_PORT: /home/runner/work/test_mysql/test_mysql/tmp/mysql.sock
     steps:
     - run: pwd
     - uses: actions/checkout@v2.3.1
     - run: mysql --version
     - run: mysql -u root --protocol tcp -e "status;"
     - run: mysql -u root --protocol tcp -e "show variables like 'socket';"
-    - run: ls -la /var/run/mysqld
     - run: mysql -u root -e 'status;'
