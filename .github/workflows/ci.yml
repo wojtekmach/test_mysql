@@ -22,6 +22,7 @@ jobs:
           - 3306:3306
         volumes:
           - /var/run/mysqld:/var/run/mysqld
+          - /var/run/mysqld:
         options: >-
           --health-cmd "mysql -u root -e 'SELECT @@version;'"
           --health-interval 5s
@@ -29,4 +30,5 @@ jobs:
           --health-retries 5
     steps:
     - uses: actions/checkout@v2.3.1
+    - run: mysql --version
     - run: mysql -u root -e 'SELECT @@version;'
