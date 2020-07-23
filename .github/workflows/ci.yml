@@ -10,23 +10,16 @@ jobs:
       matrix:
         include:
           - db: mysql:5.5
-          # - db: mysql:5.6
-          # - db: mysql:5.7
-          # - db: mysql:8.0
+          - db: mysql:5.6
+          - db: mysql:5.7
+          - db: mysql:8.0
     services:
       mysql:
         image: ${{matrix.db}}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 1
-          MYSQL_SOCKET_DIR: /var/run/mysqld
-          MYSQL_UNIX_PORT: /var/run/mysqld/mysqld.sock
         ports:
           - 3306:3306
-        volumes:
-          - /var/run/mysqld:/var/run/mysqld
     steps:
     - uses: actions/checkout@v2.3.1
-    - run: ls /var
-    - run: ls /var/run
-    - run: ls /var/run/mysqld
-    - run: until mysql -u root -e "SELECT @@version;"; do sleep 1; done
+    - run: until mysql -u root --protocol=tcp -e "SELECT @@version;"; do sleep 1; done
