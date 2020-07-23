@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - db: mysql:5.5
+          - db: mysql:8.0
           # - db: mysql:5.6
           # - db: mysql:5.7
           # - db: mysql:8.0
