@@ -22,6 +22,7 @@ jobs:
         ports:
           - 3306:3306
         volumes:
+          - ./my.cnf:/etc/my.cnf
           - /var/run/mysqld:/var/run/mysqld
         options: >-
           --health-cmd "mysql -u root --protocol tcp -e 'SELECT @@version;'"
