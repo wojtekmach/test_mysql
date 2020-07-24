@@ -16,8 +16,7 @@ jobs:
     env:
       MYSQL_UNIX_PORT: /tmp/var/run/mysqld
     steps:
-    - run: ls -la /tmp
-    - run: docker run -p 3306:3306 --volume /tmp:/var/run/mysqld -e MYSQL_ALLOW_EMPTY_PASSWORD=1 ${{matrix.db}} --innodb_log_file_size=1G
+    - run: docker run -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 ${{matrix.db}} --innodb_log_file_size=1G
     - run: until mysql --port 3306 --protocol=tcp -u root -e "SELECT @@version;"; do sleep 3; done
     - run: mysql --version
     - run: mysql -u root --protocol tcp -e "status;"
