@@ -16,7 +16,7 @@ jobs:
     env:
       MYSQL_UNIX_PORT: /var/run/mysqld/mysqld.sock
     steps:
-    - run: chmod 777 /var/run/mysqld
+    - run: mkdir -p /var/run/mysqld
     - run: docker run -p 3306:3306 --volume /var/run/mysqld:/var/run/mysqld -e MYSQL_ALLOW_EMPTY_PASSWORD=1 ${{matrix.db}} --innodb_log_file_size=1G
     - run: until mysql --port 3306 --protocol=tcp -u root -e "SELECT @@version;"; do sleep 3; done
     - run: mysql --version
