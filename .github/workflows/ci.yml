@@ -15,14 +15,12 @@ jobs:
           - db: mysql:8.0
     services:
       mysql:
-        image: ${{matrix.db}}
+        image: "${{matrix.db}} --innodb_log_file_size=1G"
         options: >-
           --health-cmd "mysql -e 'SELECT @@version;'"
           --health-interval 5s
           --health-timeout 1s
           --health-retries 5
-          --
-          --innodb_log_file_size=1G
     steps:
     # - run: sudo mkdir -p /var/run/mysqld
     # - run: sudo chmod 777 /var/run/mysqld
